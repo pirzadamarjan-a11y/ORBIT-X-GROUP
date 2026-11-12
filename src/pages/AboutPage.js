@@ -1,6 +1,6 @@
 import { pageFooter } from '../components/Footer.js';
 import { icon } from '../components/icons.js';
-import { ORBITX_STORAGE_KEY } from '../systems/store.js';
+import { ORBITX_STORAGE_KEY, store } from '../systems/store.js';
 
 const SOURCES = [
   {
@@ -172,6 +172,53 @@ export async function mount(root) {
           <p class="data-note">Moon counts and mission timelines can change as new discoveries are confirmed. Values in ORBIT X reflect published public references available at the time of writing and are intended for education, not navigation or engineering.</p>
         </section>
 
+        <section class="about-feedback">
+  <div class="block-heading">
+    <p class="eyebrow">MISSION FEEDBACK</p>
+    <h2>Share your experience.</h2>
+    <p class="page-lede">Help us improve the ORBIT X learning experience.</p>
+  </div>
+
+  <form class="feedback-form" id="feedbackForm" novalidate>
+    <label for="feedbackArea">Project area</label>
+    <select id="feedbackArea" required>
+      <option value="">Select an area</option>
+      <option value="General">General</option>
+      <option value="Planet Explorer">Planet Explorer</option>
+      <option value="Mission Control">Mission Control</option>
+      <option value="Quiz">Quiz</option>
+      <option value="Simulator">Simulator</option>
+    </select>
+
+    <label for="feedbackRating">Rating</label>
+    <select id="feedbackRating" required>
+      <option value="">Choose a rating</option>
+      <option value="1">1 - Needs improvement</option>
+      <option value="2">2 - Fair</option>
+      <option value="3">3 - Good</option>
+      <option value="4">4 - Very good</option>
+      <option value="5">5 - Excellent</option>
+    </select>
+
+    <label for="feedbackMessage">Your feedback</label>
+    <textarea
+      id="feedbackMessage"
+      rows="4"
+      minlength="10"
+      maxlength="300"
+      placeholder="Write at least 10 characters..."
+      required
+    ></textarea>
+
+    <p id="feedbackError" class="feedback-message feedback-message--error" role="alert" hidden></p>
+    <p id="feedbackSuccess" class="feedback-message feedback-message--success" role="status" hidden></p>
+
+    <button class="button button--primary" type="submit">
+      Submit feedback
+    </button>
+  </form>
+</section>
+
         <section class="about-progress">
           <div>
             <p class="eyebrow">LOCAL BY DESIGN</p>
@@ -212,5 +259,49 @@ export async function mount(root) {
       ${pageFooter()}
     </div>
   `;
+
+    const feedbackForm = root.querySelector('#feedbackForm');
+  const feedbackArea = root.querySelector('#feedbackArea');
+  const feedbackRating = root.querySelector('#feedbackRating');
+  const feedbackMessage = root.querySelector('#feedbackMessage');
+  const feedbackError = root.querySelector('#feedbackError');
+  const feedbackSuccess = root.querySelector('#feedbackSuccess');
+
+  feedbackForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const area = feedbackArea.value;
+    const rating = Number(feedbackRating.value);
+    const message = feedbackMessage.value.trim();
+
+    feedbackError.hidden = true;
+    feedbackSuccess.hidden = true;
+
+    if (!area) {
+      feedbackError.textContent = 'Please select a project area.';
+      feedbackError.hidden = false;
+      feedbackArea.focus();
+      return;
+    }
+
+    if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
+      feedbackError.textContent = 'Please choose a rating from 1 to 5.';
+      feedbackError.hidden = false;
+      feedbackRating.focus();
+      return;
+    }
+
+    if (message.length < 10 || message.length > 300) {
+      feedbackError.textContent = 'Feedback must be between 10 and 300 characters.';
+      feedbackError.hidden = false;
+      feedbackMessage.focus();
+      return;
+    }
+
+    store.recordFeedback({ area, rating, message });
+    feedbackForm.reset();
+    feedbackSuccess.textContent = 'Thank you! Your feedback has been saved on this device.';
+    feedbackSuccess.hidden = false;
+  });
   return () => {};
 }

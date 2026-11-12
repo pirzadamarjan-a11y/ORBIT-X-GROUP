@@ -4,6 +4,7 @@ const createInitialState = () => ({
   version: 1,
   missions: [],
   planets: [],
+  feedback: [],
   quiz: {
     attempts: 0,
     bestPercent: 0,
@@ -30,6 +31,9 @@ const mergeState = (stored) => {
     ...stored,
     missions: Array.isArray(stored.missions) ? stored.missions.slice(0, 60) : [],
     planets: Array.isArray(stored.planets) ? [...new Set(stored.planets)] : [],
+         feedback: Array.isArray(stored.feedback)
+      ? stored.feedback.slice(0, 50)
+      : [],
     quiz: {
       ...base.quiz,
       ...(stored.quiz && typeof stored.quiz === 'object' ? stored.quiz : {}),
@@ -147,6 +151,24 @@ export const store = {
     const next = store.getState();
     next.settings[key] = value;
     commit(next);
+  },
+
+
+    recordFeedback({ area, rating, message }) {
+    const next = store.getState();
+
+    next.feedback.unshift({
+      id: `feedback-${Date.now()}`,
+      area,
+      rating,
+      message,
+      timestamp: new Date().toISOString(),
+    });
+
+    next.feedback = next.feedback.slice(0, 50);
+
+    commit(next);
+    return next;
   },
 
   resetProgress() {
