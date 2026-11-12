@@ -1,0 +1,93 @@
+export const SPACECRAFT = [
+  {
+    id: 'astra-lander',
+    name: 'ASTRA-L',
+    role: 'Lunar surface lander',
+    model: 'lander',
+    rangeAU: 0.8,
+    cruiseKps: 11.2,
+    crew: 2,
+    mass: '18 t',
+    fuelLabel: 'LOX / LH₂',
+    energyLabel: 'Solar + battery',
+    color: '#d9e3f3',
+    accent: '#5fe7ff',
+    description:
+      'A compact two-stage lander designed for short-duration lunar surface missions and precision polar landings.',
+    features: ['Descent-stage redundancy', 'Regolith shielding', 'Sample return capsule'],
+  },
+  {
+    id: 'ares-courier',
+    name: 'ARES-C',
+    role: 'Mars transit vehicle',
+    model: 'courier',
+    rangeAU: 3.4,
+    cruiseKps: 24.1,
+    crew: 4,
+    mass: '96 t',
+    fuelLabel: 'Methalox / nuclear thermal',
+    energyLabel: 'Fission reactor',
+    color: '#e7ecef',
+    accent: '#ff9d6f',
+    description:
+      'A long-duration crew transport with a radiation-hardened habitat ring and high-impulse transit stage.',
+    features: ['Storm shelter', 'Aerocapture heat shield', 'Closed-loop life support'],
+  },
+  {
+    id: 'odyssey-x',
+    name: 'ODYSSEY-X',
+    role: 'Deep system crew cruiser',
+    model: 'cruiser',
+    rangeAU: 8,
+    cruiseKps: 36.5,
+    crew: 6,
+    mass: '148 t',
+    fuelLabel: 'Nuclear electric',
+    energyLabel: 'Dual fission reactors',
+    color: '#f1e7d6',
+    accent: '#ffc978',
+    description:
+      'A next-generation crew cruiser capable of reaching Jupiter and Saturn with artificial-gravity rotation and redundant systems.',
+    features: ['Rotating habitat', 'Ablative micrometeoroid armor', 'Long-range comms array'],
+  },
+  {
+    id: 'titan-surveyor',
+    name: 'TITAN-S',
+    role: 'Outer-planet robotic surveyor',
+    model: 'probe',
+    rangeAU: 14,
+    cruiseKps: 44.8,
+    crew: 0,
+    mass: '9.4 t',
+    fuelLabel: 'Ion propulsion',
+    energyLabel: 'Radioisotope generator',
+    color: '#c8d7e8',
+    accent: '#bca6ff',
+    description:
+      'An autonomous science platform with deployable instruments, ring-particle samplers and high-gain communications.',
+    features: ['Autonomous navigation', 'Multi-instrument science bay', 'Radiation-tolerant avionics'],
+  },
+  {
+    id: 'helios-dawn',
+    name: 'HELIOS-D',
+    role: 'Interstellar precursor probe',
+    model: 'voyager',
+    rangeAU: 220,
+    cruiseKps: 58,
+    crew: 0,
+    mass: '6.8 t',
+    fuelLabel: 'Nuclear electric + laser boost',
+    energyLabel: 'RTG + deployable arrays',
+    color: '#e2e8f5',
+    accent: '#a6ffcd',
+    description:
+      'A long-endurance robotic probe built for the heliosphere boundary, with autonomous science scheduling and a multi-decade power budget.',
+    features: ['Deep-space autonomous ops', 'Heliosphere sensor suite', 'Ultra-low-power avionics'],
+  },
+];
+
+export const SPACECRAFT_BY_ID = Object.fromEntries(
+  SPACECRAFT.map((craft) => [craft.id, craft]),
+);
+
+export const getSpacecraft = (id) => SPACECRAFT_BY_ID[id] ?? SPACECRAFT[0];
