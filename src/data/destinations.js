@@ -1,0 +1,112 @@
+import { PLANET_BY_ID } from './planets.js';
+
+const mars = PLANET_BY_ID.mars;
+const jupiter = PLANET_BY_ID.jupiter;
+const saturn = PLANET_BY_ID.saturn;
+
+export const DESTINATIONS = [
+  {
+    id: 'moon',
+    name: 'The Moon',
+    shortName: 'Moon',
+    type: "Earth's natural satellite",
+    distanceKm: 384400,
+    distanceLabel: '384,400 km',
+    travelTimeLabel: '≈3 days',
+    deltaV: '≈3.9 km/s from low Earth orbit',
+    temperature: '−173°C to 127°C',
+    gravity: '1.62 m/s²',
+    atmosphere: 'None / exosphere',
+    color: '#c9c4bb',
+    accent: '#f3efe6',
+    description:
+      'Earth’s only natural satellite and the only other world humans have visited. Permanently shadowed polar craters may hold water ice.',
+    highlights: ['Crewed surface operations', 'Water-ice prospecting', 'Radio-quiet far side'],
+    requiredRangeAU: 0.8,
+    reachability: 'Near-Earth',
+  },
+  {
+    id: 'mars',
+    name: mars.name,
+    shortName: mars.name,
+    type: mars.type,
+    distanceKm: 225000000,
+    distanceLabel: '≈225 million km transfer',
+    travelTimeLabel: '≈7 months',
+    deltaV: '≈3.6 km/s from Earth escape',
+    temperature: mars.stats[2].value,
+    gravity: '3.71 m/s²',
+    atmosphere: 'Thin CO₂ atmosphere',
+    color: mars.accent,
+    accent: '#ffb38a',
+    description:
+      'A cold desert world with ancient river valleys, polar ice and the largest volcano in the solar system.',
+    highlights: ['Ancient lakebed survey', 'Sample caching', 'Human habitat trials'],
+    requiredRangeAU: 3,
+    reachability: 'Inner solar system',
+  },
+  {
+    id: 'jupiter',
+    name: jupiter.name,
+    shortName: jupiter.name,
+    type: jupiter.type,
+    distanceKm: 778500000,
+    distanceLabel: '778.5 million km from Sun',
+    travelTimeLabel: '≈2 years',
+    deltaV: '≈9.4 km/s required for orbit insertion',
+    temperature: '−110°C at cloud tops',
+    gravity: '24.79 m/s²',
+    atmosphere: 'Hydrogen–helium',
+    color: jupiter.accent,
+    accent: '#ffe2bd',
+    description:
+      'The largest planet: a mission here must contend with intense radiation, powerful gravity and a vast magnetosphere.',
+    highlights: ['Europa ocean survey', 'Radiation-belt mapping', 'Great Red Spot study'],
+    requiredRangeAU: 7,
+    reachability: 'Outer solar system',
+  },
+  {
+    id: 'saturn',
+    name: saturn.name,
+    shortName: saturn.name,
+    type: saturn.type,
+    distanceKm: 1430000000,
+    distanceLabel: '1.43 billion km from Sun',
+    travelTimeLabel: '≈7 years',
+    deltaV: '≈10.3 km/s with gravity assists',
+    temperature: '−140°C at cloud tops',
+    gravity: '10.44 m/s²',
+    atmosphere: 'Hydrogen–helium',
+    color: saturn.accent,
+    accent: '#fff0c2',
+    description:
+      'A ringed gas giant with a scientifically rich moon system. The faint sunlight makes power and thermal management critical.',
+    highlights: ['Ring particle sampling', 'Titan atmosphere probe', 'Enceladus plume flyby'],
+    requiredRangeAU: 12,
+    reachability: 'Outer solar system',
+  },
+  {
+    id: 'deep-space',
+    name: 'Interstellar Boundary',
+    shortName: 'Deep Space',
+    type: 'Heliosphere exit trajectory',
+    distanceKm: 17950000000,
+    distanceLabel: '≈120 AU from the Sun',
+    travelTimeLabel: 'Decades with current propulsion',
+    deltaV: 'Beyond chemical mission capability',
+    temperature: 'Cosmic background regime',
+    gravity: 'Near zero (free fall)',
+    atmosphere: 'Interstellar medium',
+    color: '#8d82ff',
+    accent: '#c9c2ff',
+    description:
+      'A conceptual long-duration probe mission beyond the heliosphere, into the interstellar medium and the unknown.',
+    highlights: ['Heliosphere crossing', 'Cosmic-ray survey', 'Long-duration autonomy'],
+    requiredRangeAU: 200,
+    reachability: 'Interstellar',
+  },
+];
+
+export const DESTINATION_BY_ID = Object.fromEntries(
+  DESTINATIONS.map((destination) => [destination.id, destination]),
+);
